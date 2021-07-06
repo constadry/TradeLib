@@ -1,0 +1,29 @@
+@model TradeLib.Models.Person
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<link rel="stylesheet" href="site.css">
+<div class="container">
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+    <form method="post">
+    <b>Email</b>
+    <input type="text" placeholder="Enter Email" name="Email" required>
+    <hr>
+    <input type="text" placeholder="Enter name" name="Name" required>
+    <hr>
+    <b>Password</b>
+    <input type="password" placeholder="Enter Password" name="Password" required>
+    <hr>
+    <b>Repeat Password</b>
+    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="submit" placeholder="Submit" name="submit" required>
+    </form>
+</div>
+
+<div class="container signin">
+<p>Already have an account? <a href="#">Sign in</a>.</p>
+</div>
