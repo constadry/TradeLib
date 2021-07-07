@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TradeLib.Models;
@@ -30,15 +29,21 @@ namespace TradeLib.Controllers
             return View();
         }
         
+        public IActionResult Person()
+        {
+            return View();
+        }
+        
         // Считывание данных из формы регистрации
-        [HttpGet]
+        [HttpPost]
         public IActionResult Registration(Person person)
         {
             try
             {
                 ViewData["Email"] = person.Email;
+                ViewData["Name"] = person.Name;
                 ViewData["Password"] = person.Password;
-                return View("Index");
+                return View("Person");
             }
             catch
             {
