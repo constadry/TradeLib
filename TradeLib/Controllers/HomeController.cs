@@ -1,9 +1,12 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TradeLib.Models;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
 
 namespace TradeLib.Controllers
 {
@@ -48,6 +51,35 @@ namespace TradeLib.Controllers
                 ViewData["Name"] = person.Name;
                 ViewData["Password"] = person.Password;
                 db.Add(person);
+                var message = new MimeMessage();
+                var addressFrom = new MailboxAddress("Admin", "behappydtworry@gmail.com");
+                message.From.Add(addressFrom);
+                var addressTo = new MailboxAddress("User", ViewData["Email"].ToString());
+                message.To.Add(addressTo);
+
+                message.Subject = "Confirm registration";
+
+                var body = new BodyBuilder {HtmlBody = "<a>Click here to confirm the registration on TradeLib</a>"};
+                message.Body = body.ToMessageBody();
+
+                var client = new SmtpClient();
+                try
+                {
+                    client.Connect("smtp.gmail.com", 465, true);
+                    client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{e.Message}");
+                    throw;
+                }
+                
+                
+                client.Send(message);
+                client.Disconnect(true);
+                client.Dispose();
+
+                //test page to show working registration method
                 return View("Person");
             }
             catch
