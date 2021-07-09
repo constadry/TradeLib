@@ -1,6 +1,13 @@
+@model IEnumerable<TradeLib.Models.Person>
 @{
     ViewData["Title"] = "Your account";
 }
-
-<strong> Name </strong> : @ViewData["Name"] <br/>
-<strong> Email </strong>: @ViewData["Email"] <br/>
+<table>
+@foreach (var person in Model)
+{
+    <tr>
+        <td><strong>Name: </strong>@person.Name</td>
+        <td><strong>Email: </strong>@person.Email</td>
+    </tr>
+}
+</table>

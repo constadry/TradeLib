@@ -12,7 +12,7 @@ namespace TradeLib
             context.Persons.AddRange(
                 new Person
                 {
-                    Name = "Ivan",
+                    Name = "Igor",
                     Email = "test1@gmail.ru",
                     Password = "1234"
                 },

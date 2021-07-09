@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -14,16 +15,16 @@ namespace TradeLib.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public Context db;
+        private readonly Context _db;
         public HomeController(ILogger<HomeController> logger, Context context)
         {
             _logger = logger;
-            db = context;
+            _db = context;
         }
 
         public IActionResult Index()
         {
-            return View(db.Persons.ToList());
+            return View();
         }
 
         public IActionResult Privacy()
@@ -38,7 +39,7 @@ namespace TradeLib.Controllers
         
         public IActionResult Person()
         {
-            return View();
+            return View(_db.Persons.ToList());
         }
         
         // Считывание данных из формы регистрации
@@ -50,42 +51,47 @@ namespace TradeLib.Controllers
                 ViewData["Email"] = person.Email;
                 ViewData["Name"] = person.Name;
                 ViewData["Password"] = person.Password;
-                db.Add(person);
-                var message = new MimeMessage();
-                var addressFrom = new MailboxAddress("Admin", "behappydtworry@gmail.com");
-                message.From.Add(addressFrom);
-                var addressTo = new MailboxAddress("User", ViewData["Email"].ToString());
-                message.To.Add(addressTo);
-
-                message.Subject = "Confirm registration";
-
-                var body = new BodyBuilder {HtmlBody = "<a>Click here to confirm the registration on TradeLib</a>"};
-                message.Body = body.ToMessageBody();
-
-                var client = new SmtpClient();
-                try
-                {
-                    client.Connect("smtp.gmail.com", 465, true);
-                    client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"{e.Message}");
-                    throw;
-                }
-                
-                
-                client.Send(message);
-                client.Disconnect(true);
-                client.Dispose();
-
+                _db.Add(person);
+                _db.SaveChanges();
+                SendMessage();
                 //test page to show working registration method
-                return View("Person");
+                return View("Index");
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine($"{e.Message}");
                 return View();
             }
+        }
+
+        private void SendMessage()
+        {
+            var message = new MimeMessage();
+            var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
+            message.From.Add(addressFrom);
+            var addressTo = new MailboxAddress("User", ViewData["Email"].ToString());
+            message.To.Add(addressTo);
+
+            message.Subject = "Confirm registration";
+
+            var body = new BodyBuilder {HtmlBody = "<a href= \" https://localhost:5001/Home/Person \"> Click here to confirm the registration on TradeLib</a>"};
+            message.Body = body.ToMessageBody();
+
+            var client = new SmtpClient();
+            try
+            {
+                client.Connect("smtp.gmail.com", 465, true);
+                client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}");
+                throw;
+            }
+
+            client.Send(message);
+            client.Disconnect(true);
+            client.Dispose();
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

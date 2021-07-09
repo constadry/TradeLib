@@ -2,7 +2,7 @@
 
 namespace TradeLib.Models
 {
-    public class Context : DbContext
+    public sealed class Context : DbContext
     {
         public DbSet<Person> Persons { get; set; }
         public DbSet<Product> Products { get; set; }
