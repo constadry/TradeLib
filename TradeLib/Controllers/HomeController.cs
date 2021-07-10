@@ -32,22 +32,19 @@ namespace TradeLib.Controllers
             //TODO: Here we should get user mail address
             //TODO: Find row with with address in DB and change confirm value
             var address = Request.QueryString.Value?.Split('=').LastOrDefault();
-            var person = GetPersonByEmail(address);
-            _db.Persons.Remove(person);
-            person.Confirmed = true;
-            _db.Persons.Add(person);
+            ConfirmRegistration(address);
             _db.SaveChanges();
-            return View("Person");
+            return View();
         }
 
-        private Person GetPersonByEmail(string address)
+        private void ConfirmRegistration(string address)
         {
             try
             {
-                // return _db.Persons.ToList().
-                //     FirstOrDefault(person => person.Email == address);
-                return Enumerable.
-                    FirstOrDefault(_db.Persons, person => person.Email == address);
+                foreach (var person in _db.Persons)
+                {
+                    if (person.Email == address) person.Confirmed = true;
+                }
             }
             catch (Exception e)
             {
@@ -58,8 +55,7 @@ namespace TradeLib.Controllers
 
         private bool IsUserExist(string address)
         {
-            var person = GetPersonByEmail(address);
-            return person != null;
+            return Enumerable.Any(_db.Persons, person => person.Email == address);
         }
 
         // Считывание данных из формы регистрации
