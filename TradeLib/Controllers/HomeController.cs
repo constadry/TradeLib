@@ -22,39 +22,57 @@ namespace TradeLib.Controllers
             _db = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() => View();
+        public IActionResult Privacy() => View();
+        public IActionResult Registration() => View();
+        public IActionResult Person() => View(_db.Persons.ToList());
+
+        public IActionResult Confirmation()
         {
-            return View();
+            //TODO: Here we should get user mail address
+            //TODO: Find row with with address in DB and change confirm value
+            var address = Request.QueryString.Value?.Split('=').LastOrDefault();
+            var person = GetPersonByEmail(address);
+            _db.Persons.Remove(person);
+            person.Confirmed = true;
+            _db.Persons.Add(person);
+            _db.SaveChanges();
+            return View("Person");
         }
 
-        public IActionResult Privacy()
+        private Person GetPersonByEmail(string address)
         {
-            return View();
+            try
+            {
+                // return _db.Persons.ToList().
+                //     FirstOrDefault(person => person.Email == address);
+                return Enumerable.
+                    FirstOrDefault(_db.Persons, person => person.Email == address);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {address}");
+                throw;
+            }
         }
-        
-        public IActionResult Registration()
+
+        private bool IsUserExist(string address)
         {
-            return View();
+            var person = GetPersonByEmail(address);
+            return person != null;
         }
-        
-        public IActionResult Person()
-        {
-            return View(_db.Persons.ToList());
-        }
-        
+
         // Считывание данных из формы регистрации
         [HttpPost]
         public IActionResult Registration(Person person)
         {
             try
             {
-                ViewData["Email"] = person.Email;
-                ViewData["Name"] = person.Name;
-                ViewData["Password"] = person.Password;
+                if (IsUserExist(person.Email)) return View("Index");
+                person.Confirmed = false;
                 _db.Add(person);
                 _db.SaveChanges();
-                SendMessage();
-                //test page to show working registration method
+                SendMessage(person.Email);
                 return View("Index");
             }
             catch (Exception e)
@@ -64,17 +82,20 @@ namespace TradeLib.Controllers
             }
         }
 
-        private void SendMessage()
+        private static void SendMessage(string address)
         {
             var message = new MimeMessage();
             var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
             message.From.Add(addressFrom);
-            var addressTo = new MailboxAddress("User", ViewData["Email"].ToString());
+            var addressTo = new MailboxAddress("User", address);
             message.To.Add(addressTo);
 
             message.Subject = "Confirm registration";
 
-            var body = new BodyBuilder {HtmlBody = "<a href= \" https://localhost:5001/Home/Person \"> Click here to confirm the registration on TradeLib</a>"};
+            var body = new BodyBuilder {HtmlBody =
+                $"<a href= \" https://localhost:5001/Home/Confirmation?mail_ref={address} \">" +
+                " Click here to confirm the registration on TradeLib" +
+                "</a>"};
             message.Body = body.ToMessageBody();
 
             var client = new SmtpClient();

@@ -5,6 +5,7 @@
 <table>
 @foreach (var person in Model)
 {
+    //@if (!person.Confirmed) continue;
     <tr>
         <td><strong>Name: </strong>@person.Name</td>
         <td><strong>Email: </strong>@person.Email</td>
