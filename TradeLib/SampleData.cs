@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection.Emit;
 using TradeLib.Models;
 
 namespace TradeLib
@@ -29,6 +30,23 @@ namespace TradeLib
                     Email = "test3@gmail.ru",
                     Password = "1234",
                     Confirmed = true
+                }
+            );
+            context.Products.AddRange(new Product
+                {
+                    Name = "algosy",
+                    Type = "lab",
+                    Description = "first lab",
+                    ImageUrl = "sadfasdfa",
+                    Price = "1200"
+                },
+                new Product
+                {
+                    Name = "EVM",
+                    Type = "lab",
+                    Description = "sixth lab",
+                    ImageUrl = "sadfasdfa",
+                    Price = "500"
                 }
             );
             context.SaveChanges();

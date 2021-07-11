@@ -26,6 +26,8 @@ namespace TradeLib.Controllers
         public IActionResult Privacy() => View();
         public IActionResult Registration() => View();
         public IActionResult Person() => View(_db.Persons.ToList());
+        public IActionResult AddProduct() => View();
+        public IActionResult Products() => View(_db.Products.ToList());
 
         public IActionResult Confirmation()
         {
@@ -78,10 +80,28 @@ namespace TradeLib.Controllers
             }
         }
 
+        public IActionResult AddProduct(Product product)
+        {
+            try
+            {
+                // Don't work...
+                _db.Add(product);
+                _db.SaveChanges();
+                return View("Products");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}");
+                return View();
+            }
+        }
+
         private static void SendMessage(string address)
         {
             var message = new MimeMessage();
-            var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
+            // var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
+            var addressFrom = new MailboxAddress("TradeLib", "annbossova@gmail.com");
+
             message.From.Add(addressFrom);
             var addressTo = new MailboxAddress("User", address);
             message.To.Add(addressTo);
@@ -98,7 +118,8 @@ namespace TradeLib.Controllers
             try
             {
                 client.Connect("smtp.gmail.com", 465, true);
-                client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                // client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                client.Authenticate("annbossova@gmail.com","AlexBossov123412344321");
             }
             catch (Exception e)
             {
