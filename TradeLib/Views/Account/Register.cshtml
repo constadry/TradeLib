@@ -1,0 +1,46 @@
+@model TradeLib.ViewModels.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link rel="stylesheet" href="site.css">
+<div class="container">
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+    <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true" >
+        <div>
+            <b>Email</b>
+            <input asp-for="Email">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <hr>
+        <div>
+            <b>Name</b>
+            <input asp-for="Name">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <hr>
+        <div>
+            <b>Password</b>
+            <input asp-for="Password">
+            <span asp-validation-for="Password"></span>
+        </div>
+        <hr>
+        <div>
+            <b>Repeat Password</b>
+            <input asp-for="RepeatingPassword">
+            <span asp-validation-for="RepeatingPassword"></span>
+        </div>
+        <input type="submit"
+               name="submit"
+               value="Confirm email address and create account"
+               class="registerbtn"
+               required>
+    </form>
+</div>
+
+<div class="container signin">
+    <p>Already have an account? <a href="#">Sign in</a>.</p>
+</div>
