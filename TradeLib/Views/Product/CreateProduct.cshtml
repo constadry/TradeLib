@@ -1,7 +1,7 @@
 @model IEnumerable<TradeLib.Models.Product>
 
 @{
-    ViewData["Title"] = "AddProduct";
+    ViewData["Title"] = "CreateProduct";
 }
 
 <link rel="stylesheet" href="site.css">
@@ -10,7 +10,7 @@
     <p>Please fill in this form to add an product.</p>
     <hr>
     
-    <form enctype="multipart/form-data" method="post">
+    <form asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" method="post">
         
         <b>Name</b>
         <input type="text" placeholder="Enter Name" name="Name" required>
@@ -25,13 +25,13 @@
         <hr>
         
         <b>Image</b>
-        <input type="file" placeholder="Enter Image" name="Image" accept="image/*">
+                <input type="file" placeholder="Enter Image" name="uploadImage" accept="image/*">
         <hr>
         
         <b>Price</b>
-        <input type="text" placeholder="Enter Type" name="Type" required>
+        <input type="text" placeholder="Enter Price" name="Price" required>
         <hr>
-        
+
         <input type="submit"
                placeholder="Submit"
                name="submit"

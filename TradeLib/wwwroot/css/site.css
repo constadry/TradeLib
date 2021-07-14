@@ -55,3 +55,17 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
+
+td.product{
+  border: 100px;
+  padding: 20px 10px;
+  border-radius: 3px;
+}
+
+td.product:hover{
+  background-color: #aaa8a8;
+}
+
+td.product:checked +.product{
+  background-color: orange;
+}

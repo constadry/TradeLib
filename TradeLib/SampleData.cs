@@ -32,23 +32,21 @@ namespace TradeLib
                     Confirmed = true
                 }
             );
-            context.Products.AddRange(new Product
-                {
-                    Name = "algosy",
-                    Type = "lab",
-                    Description = "first lab",
-                    ImageUrl = "sadfasdfa",
-                    Price = "1200"
-                },
-                new Product
-                {
-                    Name = "EVM",
-                    Type = "lab",
-                    Description = "sixth lab",
-                    ImageUrl = "sadfasdfa",
-                    Price = "500"
-                }
-            );
+            // context.Products.AddRange(new Product
+                // {
+                //     Name = "algosy",
+                //     Type = "lab",
+                //     Description = "first lab",
+                //     Price = "1200"
+                // },
+                // new Product
+                // {
+                //     Name = "EVM",
+                //     Type = "lab",
+                //     Description = "sixth lab",
+                //     Price = "500"
+                // }
+            // );
             context.SaveChanges();
         }
     }

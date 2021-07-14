@@ -1,20 +1,25 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TradeLib.Models;
 using MailKit.Net.Smtp;
 using MailKit;
+using Microsoft.AspNetCore.Http;
 using MimeKit;
+using System.Web;
 
 namespace TradeLib.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        
         private readonly Context _db;
         public HomeController(ILogger<HomeController> logger, Context context)
         {
@@ -26,13 +31,9 @@ namespace TradeLib.Controllers
         public IActionResult Privacy() => View();
         public IActionResult Registration() => View();
         public IActionResult Person() => View(_db.Persons.ToList());
-        public IActionResult AddProduct() => View();
-        public IActionResult Products() => View(_db.Products.ToList());
-
+        
         public IActionResult Confirmation()
         {
-            //TODO: Here we should get user mail address
-            //TODO: Find row with with address in DB and change confirm value
             var address = Request.QueryString.Value?.Split('=').LastOrDefault();
             ConfirmRegistration(address);
             _db.SaveChanges();
@@ -60,7 +61,6 @@ namespace TradeLib.Controllers
             return Enumerable.Any(_db.Persons, person => person.Email == address);
         }
 
-        // Считывание данных из формы регистрации
         [HttpPost]
         public IActionResult Registration(Person person)
         {
@@ -79,23 +79,9 @@ namespace TradeLib.Controllers
                 return View();
             }
         }
-
-        public IActionResult AddProduct(Product product)
-        {
-            try
-            {
-                // Don't work...
-                _db.Add(product);
-                _db.SaveChanges();
-                return View("Products");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
-                return View();
-            }
-        }
-
+        
+        [HttpPost]
+        
         private static void SendMessage(string address)
         {
             var message = new MimeMessage();

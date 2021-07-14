@@ -5,16 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0be90383-37b1-4e4d-ad21-df56f4f582c5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TradeLib/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TradeLib/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TradeLib/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeLib/Models/Context.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/Models/Context.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TradeLib/Models/Person.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/Models/Person.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TradeLib/Models/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/Models/Product.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TradeLib/SampleData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/SampleData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TradeLib/TradeLib.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/TradeLib.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeLib/Views/Home/AddProduct.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeLib/Views/Home/Products.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeLib/Views/Home/Registration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/Views/Home/Registration.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradeLib/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/TradeLib/wwwroot/css/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -34,23 +47,47 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/TradeLib/Views/Product/CreateProduct.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TradeLib/Views/Catalog/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E9F0B9B3-A831-4CEF-90C9-8C08037CC53A/41/SqlServerObjectToStringTranslator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$APPLICATION_CONFIG_DIR$/consoles/db/c8fb1341-f306-41b6-872a-7fca9d2ab26a/console.sql" />
-      <option value="$PROJECT_DIR$/TradeLib/Models/Context.cs" />
       <option value="$PROJECT_DIR$/TradeLib/appsettings.json" />
       <option value="$PROJECT_DIR$/TradeLib/Startup.cs" />
       <option value="$PROJECT_DIR$/TradeLib/Program.cs" />
       <option value="$PROJECT_DIR$/TradeLib/Views/Home/Index.cshtml" />
       <option value="$PROJECT_DIR$/TradeLib/Views/Home/Product.cshtml" />
-      <option value="$PROJECT_DIR$/TradeLib/Views/Home/AddProduct.cshtml" />
-      <option value="$PROJECT_DIR$/TradeLib/Views/Home/Products.cshtml" />
       <option value="$PROJECT_DIR$/TradeLib/Models/Person.cs" />
-      <option value="$PROJECT_DIR$/TradeLib/Models/Product.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Models/Picture.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/Pictures.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/Create.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Models/Context.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/UploadImage.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/AddProduct.cshtml" />
       <option value="$PROJECT_DIR$/TradeLib/SampleData.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/Products.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Pages/Product/AddProduct.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/AddProduct.html" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/Product.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/AddProduct.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Pages/Product/CareateProduct.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/Caralog.cshtml" />
       <option value="$PROJECT_DIR$/TradeLib/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Pages/Catalog/Catalog.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/Catalog.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Catalog/CatalogShow.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Catalog/Show.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Controllers/CatalogController.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Models/Product.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Home/Registration.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/wwwroot/css/site.css" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Catalog/Index.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Controllers/ProductController.cs" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/CreateProduct.cshtml" />
+      <option value="$PROJECT_DIR$/TradeLib/Views/Product/ShowProduct.cshtml" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1uymHaH4juriqht5LGljQwRgmdY" />
@@ -61,6 +98,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql&#10;sqlserver" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3498452" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -114,7 +154,11 @@
       <workItem from="1625738707597" duration="4813000" />
       <workItem from="1625821700514" duration="1386000" />
       <workItem from="1625823196282" duration="16334000" />
-      <workItem from="1625971450446" duration="1736000" />
+      <workItem from="1625971450446" duration="2039000" />
+      <workItem from="1626013273685" duration="3091000" />
+      <workItem from="1626067038297" duration="3328000" />
+      <workItem from="1626161863132" duration="15912000" />
+      <workItem from="1626243831369" duration="8575000" />
     </task>
     <task id="LOCAL-00001" summary="feat: Add database">
       <created>1625740719539</created>
@@ -130,7 +174,21 @@
       <option name="project" value="LOCAL" />
       <updated>1625937838010</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: Add page with Product">
+      <created>1625973302703</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1625973302703</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: Pages Products and AddProduct">
+      <created>1625973402857</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1625973402857</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +224,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="feat: Add database" />
     <MESSAGE value="feat : Commits of constadry" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : Commits of constadry" />
+    <MESSAGE value="feat: Add page with Product" />
+    <MESSAGE value="feat: Pages Products and AddProduct" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Pages Products and AddProduct" />
   </component>
 </project>
