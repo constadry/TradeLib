@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TradeLib.Models;
-using MailKit.Net.Smtp;
-using MailKit;
-using Microsoft.AspNetCore.Http;
-using MimeKit;
-using System.Web;
+
 using Microsoft.AspNetCore.Authorization;
 
 namespace TradeLib.Controllers

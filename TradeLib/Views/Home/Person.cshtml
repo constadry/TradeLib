@@ -6,6 +6,13 @@
 {
     @if (person.Email == User.Identity?.Name)
     {
-        <h1>@person.Name</h1>
+        @if (person.Confirmed)
+        {
+            <h2>@person.Name</h2>
+        }
+        else
+        {
+            <h2>Confirm your account.</h2>            
+        }
     } 
 }
