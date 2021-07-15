@@ -30,19 +30,16 @@ namespace TradeLib.Controllers
                 if (account.Email != loginModel.Email || account.Password != loginModel.Password) continue;
                 if (account.Confirmed) 
                 {
-                    //Authentication
                     await Authenticate(account.Email);
 
                     return RedirectToAction("Person", "Home");
                 }
                 else
                 {
-                    //TODO: Show message: "Please, confirm your account"
-                    return Content("Please, confirm your account");
+                    return RedirectToAction("ConfirmYourEmail", "Message");
                 }
             }
-            //TODO: Show message: "Please, enter existence email and password"
-            return Content("Please, enter existence email and password");
+            return RedirectToAction("EnterExistData", "Message");;
         }
 
         private bool IsUserExist(string address) => 

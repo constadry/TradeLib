@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,13 +20,17 @@ namespace TradeLib.Controllers
             _logger = logger;
             _db = context;
         }
-
+        [Authorize]
         public IActionResult CreateProduct() => View();
 
         public IActionResult ShowProduct() => View();
 
+        [Authorize][HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
         {
+            var userEmail = User.Identity?.Name;
+            var person = _db.Persons.ToList().FirstOrDefault(p => p.Confirmed && p.Email == userEmail);
+            if (person == null) return RedirectToAction("ConfirmYourEmail", "Message");
             try
             {
                 using (var ms = new MemoryStream())
