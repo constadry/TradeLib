@@ -57,7 +57,7 @@ namespace TradeLib.Controllers
 
             var body = new BodyBuilder 
             {HtmlBody =
-                $"<a href= \" https://localhost:5001/Home/Confirmation?mail_ref={address} \">" +
+                $"<a href= \" https://localhost:5001/Confirmation/Confirmation?mail_ref={address} \">" +
                 " Click here to confirm the registration on TradeLib" +
                 "</a>"
             };
@@ -85,14 +85,16 @@ namespace TradeLib.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (IsUserExist(person.Email)) return RedirectToAction("Index", "Home");
-                _db.Add(new Person
+                if (!IsUserExist(person.Email))
                 {
-                    Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
-                });
-                _db.SaveChanges();
+                    _db.Add(new Person
+                    {
+                        Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
+                    });
+                    _db.SaveChanges();
+                }
                 SendMessage(person.Email);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Person", "Home");
             }
             else
             {
