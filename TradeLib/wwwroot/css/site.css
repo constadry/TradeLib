@@ -65,7 +65,3 @@ td.product{
 td.product:hover{
   background-color: #aaa8a8;
 }
-
-td.product:checked +.product{
-  background-color: orange;
-}
