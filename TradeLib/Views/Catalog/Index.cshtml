@@ -1,0 +1,30 @@
+@model IEnumerable<TradeLib.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="css/site.css">
+<div>
+    <table>
+        @{ byte i = 0; }
+        @foreach (var product in Model)
+        {
+            <td type="button" onclick="location.href='Home/Index'" class="product">
+                @if (product.Image is not null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(product.Image)" alt="@product.Name" height="350" weight="350"/>
+                    <br/>
+                }
+                Name: @product.Name <br/>
+                Price: @product.Price <br/>
+            </td>
+            i++;
+            if (i == 4)
+            {
+                i = 0;
+                <tr></tr>
+            }
+        }
+    </table>
+</div>
