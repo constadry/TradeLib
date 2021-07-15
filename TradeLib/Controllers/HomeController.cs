@@ -13,6 +13,7 @@ using MailKit;
 using Microsoft.AspNetCore.Http;
 using MimeKit;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TradeLib.Controllers
 {
@@ -29,7 +30,7 @@ namespace TradeLib.Controllers
 
         public IActionResult Index() => View();
         public IActionResult Privacy() => View();
-        public IActionResult Registration() => View();
+        [Authorize]
         public IActionResult Person() => View(_db.Persons.ToList());
         
         public IActionResult Confirmation()
@@ -54,68 +55,6 @@ namespace TradeLib.Controllers
                 Console.WriteLine($"{e.Message}, {address}");
                 throw;
             }
-        }
-
-        private bool IsUserExist(string address)
-        {
-            return Enumerable.Any(_db.Persons, person => person.Email == address);
-        }
-
-        [HttpPost]
-        public IActionResult Registration(Person person)
-        {
-            try
-            {
-                if (IsUserExist(person.Email)) return View("Index");
-                person.Confirmed = false;
-                _db.Add(person);
-                _db.SaveChanges();
-                SendMessage(person.Email);
-                return View("Index");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
-                return View();
-            }
-        }
-        
-        [HttpPost]
-        
-        private static void SendMessage(string address)
-        {
-            var message = new MimeMessage();
-            // var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
-            var addressFrom = new MailboxAddress("TradeLib", "annbossova@gmail.com");
-
-            message.From.Add(addressFrom);
-            var addressTo = new MailboxAddress("User", address);
-            message.To.Add(addressTo);
-
-            message.Subject = "Confirm registration";
-
-            var body = new BodyBuilder {HtmlBody =
-                $"<a href= \" https://localhost:5001/Home/Confirmation?mail_ref={address} \">" +
-                " Click here to confirm the registration on TradeLib" +
-                "</a>"};
-            message.Body = body.ToMessageBody();
-
-            var client = new SmtpClient();
-            try
-            {
-                client.Connect("smtp.gmail.com", 465, true);
-                // client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
-                client.Authenticate("annbossova@gmail.com","AlexBossov123412344321");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
-                throw;
-            }
-
-            client.Send(message);
-            client.Disconnect(true);
-            client.Dispose();
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -16,37 +16,8 @@ namespace TradeLib
                     Email = "test1@gmail.ru",
                     Password = "1234",
                     Confirmed = true
-                },
-                new Person
-                {
-                    Name = "Alex",
-                    Email = "test2@gmail.ru",
-                    Password = "1234",
-                    Confirmed = true
-                },
-                new Person
-                {
-                    Name = "Kostya",
-                    Email = "test3@gmail.ru",
-                    Password = "1234",
-                    Confirmed = true
                 }
             );
-            // context.Products.AddRange(new Product
-                // {
-                //     Name = "algosy",
-                //     Type = "lab",
-                //     Description = "first lab",
-                //     Price = "1200"
-                // },
-                // new Product
-                // {
-                //     Name = "EVM",
-                //     Type = "lab",
-                //     Description = "sixth lab",
-                //     Price = "500"
-                // }
-            // );
             context.SaveChanges();
         }
     }

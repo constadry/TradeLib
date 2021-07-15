@@ -1,0 +1,30 @@
+@model TradeLib.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<link rel="stylesheet" href="site.css">
+<div class="container">
+    <h1>Sign in</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+    <form method="post">
+        <b>Email</b>
+        <input type="text" placeholder="Enter Email" name="Email" required>
+        <hr>
+        <b>Password</b>
+        <input type="password" placeholder="Enter Password" name="Password" required>
+        <hr>
+        <input type="submit"
+               placeholder="Submit"
+               name="submit"
+               value="Confirm email address and create account"
+               class="registerbtn"
+               required>
+    </form>
+</div>
+
+<div class="container signin">
+    <p>Do not have an account? <a asp-action="Register">Register now</a>.</p>
+</div>
