@@ -22,8 +22,21 @@ namespace TradeLib.Controllers
         }
         [Authorize]
         public IActionResult CreateProduct() => View();
+        
+        public IActionResult ShowProduct(Guid? id)
+        {
+            if (id == null) return View();
+            Console.WriteLine(id);
+            foreach (var prod in _db.Products)
+            {
+                if (prod.Id == id)
+                {
+                    return View(prod);
+                }
+            }
 
-        public IActionResult ShowProduct() => View();
+            return View();
+        }
 
         [Authorize][HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
