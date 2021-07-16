@@ -20,9 +20,8 @@ namespace TradeLib.Controllers
 
         [HttpGet]
         public IActionResult Login() => View();
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
+        [HttpPost][ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             foreach (var account in _db.Persons)
@@ -44,7 +43,74 @@ namespace TradeLib.Controllers
 
         private bool IsUserExist(string address) => 
             Enumerable.Any(_db.Persons, person => person.Email == address);
+
+        [HttpPost]
+        public IActionResult Register(RegisterModel person)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!IsUserExist(person.Email))
+                {
+                    _db.Add(new Person
+                    {
+                        Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
+                    });
+                    _db.SaveChanges();
+                }
+                SendMessage(person.Email);
+                return RedirectToAction("Person", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Password or Email are mot correct");
+            }
+
+            return View(person);
+        }
+
+        [HttpGet]
+        public IActionResult Register() => View();
         
+        [HttpGet]
+        public IActionResult Restore() => View();
+        [HttpPost]
+        public IActionResult Restore(RestoreModel restoreModel)
+        {
+            foreach (var person in _db.Persons)
+            {
+                if (person.Email == restoreModel.Email)
+                {
+                    person.Password = restoreModel.Password;
+                }
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Person", "Home");
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
+        private async Task Authenticate(string userEmail)
+        {
+            var claims = new List<Claim>
+            {
+                new (ClaimsIdentity.DefaultNameClaimType, userEmail)
+            };
+
+            var claimIdentity = new ClaimsIdentity
+            (
+                claims,
+                "ApplicationCookie",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType
+            );
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimIdentity));
+        }
+
         private static void SendMessage(string address)
         {
             var message = new MimeMessage();
@@ -78,58 +144,6 @@ namespace TradeLib.Controllers
             client.Send(message);
             client.Disconnect(true);
             client.Dispose();
-        }
-        
-        [HttpPost]
-        public IActionResult Register(RegisterModel person)
-        {
-            if (ModelState.IsValid)
-            {
-                if (!IsUserExist(person.Email))
-                {
-                    _db.Add(new Person
-                    {
-                        Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
-                    });
-                    _db.SaveChanges();
-                }
-                SendMessage(person.Email);
-                return RedirectToAction("Person", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Password or Email are mot correct");
-            }
-
-            return View(person);
-        }
-
-        [HttpGet]
-        public IActionResult Register() => View();
-
-        private async Task Authenticate(string userEmail)
-        {
-            var claims = new List<Claim>
-            {
-                new (ClaimsIdentity.DefaultNameClaimType, userEmail)
-            };
-
-            var claimIdentity = new ClaimsIdentity
-            (
-                claims,
-                "ApplicationCookie",
-                ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType
-            );
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimIdentity));
-        }
-
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
         }
     }
 }

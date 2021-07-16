@@ -20,9 +20,9 @@ namespace TradeLib.Controllers
             _logger = logger;
             _db = context;
         }
+        
         [Authorize]
         public IActionResult CreateProduct() => View();
-        
         public IActionResult ShowProduct(Guid? id)
         {
             if (id == null) return View();
@@ -34,10 +34,9 @@ namespace TradeLib.Controllers
                     return View(prod);
                 }
             }
-
             return View();
         }
-
+        
         [Authorize][HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
         {

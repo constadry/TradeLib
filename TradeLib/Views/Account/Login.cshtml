@@ -1,8 +1,6 @@
 @model TradeLib.Models.LoginModel
 
-@{
-    ViewData["Title"] = "Sign in";
-}
+@{ ViewData["Title"] = "Sign in";}
 
 <link rel="stylesheet" href="site.css">
 <div class="container">
@@ -26,5 +24,7 @@
 </div>
 
 <div class="container signin">
-    <p>Do not have an account? <a asp-action="Register">Register now</a>.</p>
+    <p>Do not have an account? <a asp-action="Register">Register now</a>.
+        If you forgot the password, would click here <a asp-action="Restore">Restore now</a>.</p>
+    @* <p>If you forgot the password, would click here <a asp-action="Restore">Restore now</a>.</p> *@
 </div>
