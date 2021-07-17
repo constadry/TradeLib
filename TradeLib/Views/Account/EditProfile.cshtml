@@ -1,0 +1,19 @@
+@model TradeLib.Models.EditProfileModel
+
+@{
+    ViewData["Title"] = "Editing profile";
+}
+
+<link rel="stylesheet" href="site.css">
+
+<div class="container">
+    <form asp-action="EditProfile" asp-controller="Account">
+        <div>
+            <b>Name:</b>
+            <input asp-for="Name">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <hr>
+        <input type="submit" value="Save changes" class="registerbtn">
+    </form>
+</div>

@@ -43,7 +43,10 @@ namespace TradeLib.Controllers
 
         private bool IsUserExist(string address) => 
             Enumerable.Any(_db.Persons, person => person.Email == address);
-
+        
+        [HttpGet]
+        public IActionResult Register() => View();
+        
         [HttpPost]
         public IActionResult Register(RegisterModel person)
         {
@@ -69,11 +72,8 @@ namespace TradeLib.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register() => View();
-        
-        [HttpGet]
         public IActionResult Restore() => View();
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public IActionResult Restore(RestoreModel restoreModel)
         {
             foreach (var person in _db.Persons)
@@ -82,6 +82,21 @@ namespace TradeLib.Controllers
                 {
                     person.Password = restoreModel.Password;
                 }
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Person", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult EditProfile() => View();
+
+        [HttpPost]
+        public IActionResult EditProfile(EditProfileModel editProfileModel)
+        {
+            foreach (var person in _db.Persons)
+            {
+                if (person.Email != User.Identity?.Name) continue;
+                person.Name = editProfileModel.Name;
             }
             _db.SaveChanges();
             return RedirectToAction("Person", "Home");

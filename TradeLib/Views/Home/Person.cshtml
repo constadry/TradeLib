@@ -2,13 +2,19 @@
 @{
     ViewData["Title"] = "Your account";
 }
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 @foreach (var person in Model)
 {
     @if (person.Email == User.Identity?.Name)
     {
         @if (person.Confirmed)
         {
-            <h2>@person.Name</h2>
+            <div display:inline-block>
+                <bold>Name: @person.Name</bold>
+                <i class="material-icons" onclick="location.href='/Account/EditProfile'">edit</i>
+            </div>
         }
         else
         {
