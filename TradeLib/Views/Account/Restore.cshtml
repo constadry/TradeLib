@@ -4,16 +4,9 @@
     ViewData["Title"] = "Restore password";
 }
 
-<link rel="stylesheet" href="site.css">
-
 <div class="container">
-    <form asp-action="Restore" asp-controller="Account" asp-anti-forgery="true" >
-        <div>
-            <b>Email</b>
-            <input asp-for="Email">
-            <span asp-validation-for="Email"></span>
-        </div>
-        <hr>
+    <form asp-action="Restore">
+        <input type="hidden" value="@ViewBag.Email" name="Email" />
         <div>
             <b>Password</b>
             <input asp-for="Password">
@@ -25,7 +18,10 @@
             <input asp-for="RepeatingPassword">
             <span asp-validation-for="RepeatingPassword"></span>
         </div>
-        <br>
-        <input type="submit" value="restore the password">
+        <input type="submit"
+               name="submit"
+               value="Confirm changes"
+               class="registerbtn"
+               required>
     </form>
 </div>

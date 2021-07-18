@@ -4,8 +4,6 @@ namespace TradeLib.Models
 {
     public class RestoreModel
     {
-        [Required(ErrorMessage = "You didn't enter email.")]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "You didn't enter password.")]

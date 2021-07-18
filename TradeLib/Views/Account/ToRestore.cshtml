@@ -1,0 +1,19 @@
+@model TradeLib.Models.ToRestoreModel
+
+@{
+    ViewData["Title"] = "Restore password";
+}
+
+<link rel="stylesheet" href="site.css">
+
+<div class="container">
+    <form asp-action="ToRestore" asp-controller="Account" asp-anti-forgery="true" >
+        <div>
+            <b>Email</b>
+            <input asp-for="Email">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <br>
+        <input type="submit" value="Restore the password">
+    </form>
+</div>

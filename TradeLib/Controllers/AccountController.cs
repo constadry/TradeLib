@@ -54,13 +54,19 @@ namespace TradeLib.Controllers
             {
                 if (!IsUserExist(person.Email))
                 {
+                    //Check confirm account 
                     _db.Add(new Person
                     {
                         Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
                     });
                     _db.SaveChanges();
                 }
-                SendMessage(person.Email);
+
+                var htmlBody = 
+                    $"<a href= \" https://localhost:5001/Confirmation/Confirmation?mail_ref={person.Email} \">" +
+                    "Click here to confirm the registration on TradeLib" +
+                    "</a>";
+                SendMessage(person.Email, htmlBody);
                 return RedirectToAction("Person", "Home");
             }
             else
@@ -72,8 +78,28 @@ namespace TradeLib.Controllers
         }
 
         [HttpGet]
-        public IActionResult Restore() => View();
+        public IActionResult ToRestore() => View();
         [HttpPost][ValidateAntiForgeryToken]
+        public IActionResult ToRestore(ToRestoreModel toRestoreModel)
+        {
+            if (!IsUserExist(toRestoreModel.Email)) return RedirectToAction("EnterExistData", "Message");
+            //TODO: Check confirmation
+            var htmlBody = 
+                $"<a href= \" https://localhost:5001/Account/Restore?mail_ref={toRestoreModel.Email} \">" +
+                " Click here to change your password" +
+                "</a>";
+            SendMessage(toRestoreModel.Email, htmlBody);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Restore()
+        {
+            ViewBag.Email = Request.QueryString.Value?.Split('=').LastOrDefault();
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Restore(RestoreModel restoreModel)
         {
             foreach (var person in _db.Persons)
@@ -126,7 +152,7 @@ namespace TradeLib.Controllers
                 new ClaimsPrincipal(claimIdentity));
         }
 
-        private static void SendMessage(string address)
+        private static void SendMessage(string address, string htmlBody)
         {
             var message = new MimeMessage();
             var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
@@ -137,11 +163,7 @@ namespace TradeLib.Controllers
             message.Subject = "Confirm registration";
 
             var body = new BodyBuilder 
-            {HtmlBody =
-                $"<a href= \" https://localhost:5001/Confirmation/Confirmation?mail_ref={address} \">" +
-                " Click here to confirm the registration on TradeLib" +
-                "</a>"
-            };
+            {HtmlBody = htmlBody};
             message.Body = body.ToMessageBody();
 
             var client = new SmtpClient();
