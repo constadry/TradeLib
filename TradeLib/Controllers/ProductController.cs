@@ -20,13 +20,10 @@ namespace TradeLib.Controllers
             _logger = logger;
             _db = context;
         }
-        
-        [Authorize]
-        public IActionResult CreateProduct() => View();
+
         public IActionResult ShowProduct(Guid? id)
         {
             if (id == null) return View();
-            Console.WriteLine(id);
             foreach (var prod in _db.Products)
             {
                 if (prod.Id == id)
@@ -36,6 +33,38 @@ namespace TradeLib.Controllers
             }
             return View();
         }
+        
+        [Authorize]
+        public IActionResult AddToCart(Guid? id)
+        {
+            if (id == null) return Content("Id - null??");
+
+            foreach (var person in _db.Persons)
+            {
+                if (person.Email != User.Identity?.Name) continue;
+                var cartPosition = new CartPositions
+                {
+                    PersonId = person.Id,
+                    ProductId = id
+                };
+                if (IsDuplicate(cartPosition)) return RedirectToAction("Index", "Catalog"); 
+                _db.CartPositions.Add(cartPosition);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Catalog");
+        }
+
+        private bool IsDuplicate(CartPositions comparedPosition)
+        {
+            var cartPosition = _db.CartPositions.ToList().FirstOrDefault(
+                cart => cart.PersonId == comparedPosition.PersonId &&
+                        cart.ProductId == comparedPosition.ProductId
+            );
+            return cartPosition != null;
+        }
+        
+        [Authorize]
+        public IActionResult CreateProduct() => View();
         
         [Authorize][HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
