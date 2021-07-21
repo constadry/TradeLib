@@ -4,7 +4,7 @@
     ViewData["Title"] = "ShowProduct";
 }
 
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="~/css/site.css">
 <div class="product">
     @if (Model.Image is not null)
         {
@@ -14,4 +14,8 @@
     Name: @Model.Name <br/>
     Description: @Model.Description <br/>
     Price: @Model.Price <br/>
+    <a onclick="location.href='/Product/AddToCart/@Model.Id'">
+        <span class="material-icons">add</span> 
+    </a>
+    <strong font-size="32"> To Cart </strong>
 </div>
