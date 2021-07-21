@@ -45,13 +45,14 @@ hr {
   opacity:1;
 }
 
-/* Add a blue text color to links */
+/* Add a black text color to links */
 a {
-  color: dodgerblue;
+  color: #1b1e21;
 }
 
 a:hover {
-  color: #1d2124;
+  color: #4e555b;
+  opacity:1;
 }
 
 /* Set a grey background color and center the text of the "sign in" section */
