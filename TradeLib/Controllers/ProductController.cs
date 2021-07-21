@@ -24,14 +24,16 @@ namespace TradeLib.Controllers
         public IActionResult ShowProduct(Guid? id)
         {
             if (id == null) return View();
+            var product = new Product();
             foreach (var prod in _db.Products)
             {
-                if (prod.Id == id)
-                {
-                    return View(prod);
-                }
+                if (prod.Id != id) continue;
+                prod.VisitCount++;
+                product = prod;
             }
-            return View();
+            
+            _db.SaveChanges();
+            return View(product);
         }
         
         [Authorize]

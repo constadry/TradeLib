@@ -24,5 +24,7 @@ namespace TradeLib.Models
         
         [Required]
         public string Price { get; set; }
+        
+        public int VisitCount { get; set; }
     }
 }

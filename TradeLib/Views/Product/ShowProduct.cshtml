@@ -4,6 +4,7 @@
     ViewData["Title"] = "ShowProduct";
 }
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
 <div class="product">
     @if (Model.Image is not null)
         {
@@ -13,6 +14,9 @@
     Name: @Model.Name <br/>
     Description: @Model.Description <br/>
     Price: @Model.Price <br/>
+    <span class="material-icons-outlined">visibility</span>
+    <strong class="visual-count">@Model.VisitCount</strong>
+    <br/>
     <a href="https://localhost:5001/Product/AddToCart/@Model.Id">
         <span class="material-icons">add</span> 
     </a>
