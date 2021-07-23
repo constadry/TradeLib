@@ -5,20 +5,31 @@
 }
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
-<div class="product">
+<div class="one-product">
     @if (Model.Image is not null)
-        {
-            <img src="data:image;base64,@Convert.ToBase64String(Model.Image)" alt="@Model.Name" height="350" weight="350"/>
-            <br/>
-        }
+    {
+        <img src="data:image;base64,@Convert.ToBase64String(Model.Image)" alt="@Model.Name" height="350" weight="350"/>
+        <br/>
+    }
     Name: @Model.Name <br/>
     Description: @Model.Description <br/>
     Price: @Model.Price <br/>
     <span class="material-icons-outlined">visibility</span>
-    <strong class="visual-count">@Model.VisitCount</strong>
+    <bold class="visual-count">@Model.VisitCount</bold>
     <br/>
     <a href="https://localhost:5001/Product/AddToCart/@Model.Id">
-        <span class="material-icons">add</span> 
+        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+            add_shopping_cart
+        </span>
     </a>
-    <strong font-size="32"> To Cart </strong>
+    <a href="https://localhost:5001/Product/EditProduct/@Model.Id">
+        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+            mode_edit
+        </span>
+    </a>
+    <input href="https://localhost:5001/Catalog" type="submit" name="DeleteProduct">
+        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+            delete
+        </span>
+    </input>
 </div>

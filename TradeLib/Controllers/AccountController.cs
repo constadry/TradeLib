@@ -155,7 +155,8 @@ namespace TradeLib.Controllers
         private static void SendMessage(string address, string htmlBody)
         {
             var message = new MimeMessage();
-            var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
+            // var addressFrom = new MailboxAddress("TradeLib", "behappydtworry@gmail.com");
+            var addressFrom = new MailboxAddress("TradeLib", "annbossova@gmail.com");
             message.From.Add(addressFrom);
             var addressTo = new MailboxAddress("User", address);
             message.To.Add(addressTo);
@@ -170,7 +171,8 @@ namespace TradeLib.Controllers
             try
             {
                 client.Connect("smtp.gmail.com", 465, true);
-                client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                // client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                client.Authenticate("annbossova@gmail.com","AlexBossov123412344321");
             }
             catch (Exception e)
             {

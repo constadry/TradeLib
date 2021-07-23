@@ -1,0 +1,51 @@
+@model TradeLib.Models.Product
+
+@{
+    ViewData["Title"] = "EditProduct";
+}
+
+<link rel="stylesheet" href="~/css/site.css">
+<div class="container">
+    <h1>Product</h1>
+    <hr>
+
+    <form asp-controller="Product" asp-action="EditProduct" enctype="multipart/form-data" method="post">
+
+        <b>Name</b>
+        <div>
+            <input asp-for="Name" placeholder="Enter Name">
+            <span asp-validation-for="Name"></span>
+        </div>
+
+        <b>Type</b>
+        <div>
+            <input asp-for="Type" placeholder="Enter Type">
+            <span asp-validation-for="Type"></span>
+        </div>
+
+        <b>Description</b>
+        <div>
+            <textarea asp-for="Description" cols="80" rows="3"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+
+        @if (Model.Image is not null)
+        {
+            <img src="data:image;base64,@Convert.ToBase64String(Model.Image)" alt="@Model.Name" height="350" weight="350"/>
+            <br/>
+        }
+
+        <b>Image</b>
+        <div>
+            <input type="file" name="uploadImage" placeholder="Enter Image" accept="image/*" value="Edit Image">
+        </div>
+
+        <b>Price</b>
+        <div>
+            <input asp-for="Price" placeholder="Enter Price">
+            <span asp-validation-for="Price"></span>
+        </div>
+        
+        <input type="submit" placeholder="Edit" name="Edit" value="Edit" required>
+    </form>
+</div>
