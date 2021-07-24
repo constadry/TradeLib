@@ -67,8 +67,9 @@ namespace TradeLib.Controllers
         
         [Authorize]
         public IActionResult CreateProduct() => View();
-        
-        [Authorize][HttpPost]
+
+        [Authorize]
+        [HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
         {
             var userEmail = User.Identity?.Name;
@@ -88,13 +89,57 @@ namespace TradeLib.Controllers
                 _db.Products.Add(product);
                 _db.SaveChanges();
 
-                return View();
+                return RedirectToAction("Index", "Catalog");
             }
             catch (Exception e)
             {
                 Console.WriteLine($"{e.Message}");
                 return View();
             }
+        }
+        
+        
+        [Authorize]
+        public IActionResult EditProduct(Guid? id)
+        {
+            try
+            {
+                if (id is null) throw new Exception("Name is null");
+                var product = _db.Products.FirstOrDefault(prod => prod.Id == id);
+                if(product is null) throw new Exception("DB hasn't this id");
+                
+                return View(product);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return View();
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditProduct(Product product, IFormFile uploadImage)
+        {
+            foreach (var prod in _db.Products.Where(p => p.Id == product.Id))
+            {
+                prod.Name = product.Name; 
+                prod.Type = product.Type; 
+                prod.Description = product.Description; 
+                prod.Price = product.Price;
+                if (uploadImage is not null)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        uploadImage.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        prod.Image = fileBytes;
+                    }
+                }
+            }
+
+            _db.SaveChanges();
+            return RedirectToAction("ShowProduct", "Product", product);
         }
     }
 }

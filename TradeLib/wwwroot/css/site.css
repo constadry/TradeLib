@@ -74,3 +74,16 @@ td.product{
 td.product:hover{
   background-color: #aaa8a8;
 }
+
+.visual-count {
+  font-size: 25px;
+}
+
+a {
+  color: #1b1e21;
+}
+
+a:hover {
+  color: #4e555b;
+  opacity:1;
+}
