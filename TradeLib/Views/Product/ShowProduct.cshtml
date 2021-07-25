@@ -4,6 +4,7 @@
     ViewData["Title"] = "ShowProduct";
 }
 
+<link rel="stylesheet" href="~/css/show_product_style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
 <div class="one-product">
     @if (Model.Image is not null)
@@ -18,18 +19,18 @@
     <bold class="visual-count">@Model.VisitCount</bold>
     <br/>
     <a href="https://localhost:5001/Product/AddToCart/@Model.Id">
-        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+        <span class="material-icons edit-buttons">
             add_shopping_cart
         </span>
     </a>
     <a href="https://localhost:5001/Product/EditProduct/@Model.Id">
-        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+        <span class="material-icons edit-buttons">
             mode_edit
         </span>
     </a>
-    <input href="https://localhost:5001/Catalog" type="submit" name="DeleteProduct">
-        <span class="material-icons" style="border-style: solid; border-width: 2px; padding: 1px; border-radius: 6px;">
+    <a href="https://localhost:5001/Catalog" type="submit" name="DeleteProduct">
+        <span class="material-icons edit-buttons">
             delete
         </span>
-    </input>
+    </a>
 </div>

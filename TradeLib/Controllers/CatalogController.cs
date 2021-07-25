@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,7 +18,14 @@ namespace TradeLib.Controllers
             _logger = logger;
             _db = context;
         }
-        
+
         public IActionResult Index() => View(_db.Products.ToList());
+
+        // public IActionResult Index(List<Product> products = null)
+        // {
+        //     Console.Write(products?.LastOrDefault()?.Name);
+        //     products ??= _db.Products.ToList();
+        //     return View(products);
+        // }
     }
 }

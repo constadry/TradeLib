@@ -1,5 +1,19 @@
-﻿@{
+﻿@model TradeLib.Models.SearchModel
+
+@{
     ViewData["Title"] = "Home page";
 }
 
-<p>Start Page!</p>
+<link rel="stylesheet" href="~/css/search_style.css">
+<body>
+    <div class="text-lg-center">
+        <p>Start Page!</p>
+    </div>
+    <div class="searchbtn">
+        <form asp-area="" asp-action="Search" asp-controller="Search">
+            <input asp-for="SearchInput" placeholder="Search all" type="text">
+            <span asp-validation-for="SearchInput"></span>
+            <input type="submit" name="submit" value="go!" class="searchbtn" required>
+        </form>
+    </div>
+</body>
