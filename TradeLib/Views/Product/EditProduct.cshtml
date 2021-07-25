@@ -19,7 +19,11 @@
 
         <b>Type</b>
         <div>
-            <input asp-for="Type" placeholder="Enter Type">
+            <select asp-for="Type">
+                <option>Programming</option>
+                <option>AVM</option>
+                <option>CK</option>                
+            </select>
             <span asp-validation-for="Type"></span>
         </div>
 

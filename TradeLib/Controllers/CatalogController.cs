@@ -21,11 +21,5 @@ namespace TradeLib.Controllers
 
         public IActionResult Index() => View(_db.Products.ToList());
 
-        // public IActionResult Index(List<Product> products = null)
-        // {
-        //     Console.Write(products?.LastOrDefault()?.Name);
-        //     products ??= _db.Products.ToList();
-        //     return View(products);
-        // }
     }
 }

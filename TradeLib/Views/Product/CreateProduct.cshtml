@@ -9,7 +9,6 @@
     <h1>Product</h1>
     <p>Please fill in this form to add an product.</p>
     <hr>
-    
     <form asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" method="post">
         
         <b>Name</b>
@@ -17,9 +16,14 @@
         <hr>
         
         <b>Type</b>
-        <input type="text" placeholder="Enter Type" name="Type">
+        <br><br>
+        <select name="Type">
+            <option>Programming</option>
+            <option>AVM</option>
+            <option>CK</option>
+        </select>
         <hr>
-         
+        
         <b>Description</b>
         <textarea type="text" cols="80" rows="3" name="Description" required> </textarea>
         <hr>

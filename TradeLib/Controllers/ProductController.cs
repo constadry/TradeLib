@@ -68,8 +68,7 @@ namespace TradeLib.Controllers
         [Authorize]
         public IActionResult CreateProduct() => View();
 
-        [Authorize]
-        [HttpPost]
+        [Authorize] [HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
         {
             var userEmail = User.Identity?.Name;
