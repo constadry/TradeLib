@@ -141,5 +141,26 @@ namespace TradeLib.Controllers
             _db.SaveChanges();
             return RedirectToAction("ShowProduct", "Product", product);
         }
+
+
+        [Authorize]
+        public IActionResult DeleteProduct(Guid? id)
+        {
+            var product = _db.Products.FirstOrDefault(prod => prod.Id == id);
+            
+            if (product is null)
+                throw new Exception("Impossible");
+            
+            _db.Products.Remove(product);
+
+            var ides = _db.CartPositions.Where(identifier => identifier.ProductId == product.Id).ToList();
+            foreach (var identifier in ides)
+            {
+                _db.CartPositions.Remove(identifier);
+            }
+            
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Catalog");
+        }
     }
 }

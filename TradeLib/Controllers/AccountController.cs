@@ -79,7 +79,9 @@ namespace TradeLib.Controllers
 
         [HttpGet]
         public IActionResult ToRestore() => View();
-        [HttpPost][ValidateAntiForgeryToken]
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ToRestore(ToRestoreModel toRestoreModel)
         {
             if (!IsUserExist(toRestoreModel.Email)) return RedirectToAction("EnterExistData", "Message");
