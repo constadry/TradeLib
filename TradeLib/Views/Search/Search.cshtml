@@ -10,7 +10,6 @@
         @{ byte i = 0; }
         @foreach (var product in Model)
         {
-            Console.Write(product.Name);
             <td 
                 type="button"
                 onclick="location.href='https://localhost:5001/Product/ShowProduct/@product.Id'"
