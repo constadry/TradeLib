@@ -9,6 +9,13 @@
     <div class="text-lg-center">
         <p>Start Page!</p>
     </div>
+    <div>
+        <select name="Type">
+            <option onclick="location.href='https://localhost:5001/Category/ShowCategory/?category=Programming'">Programming</option>
+            <option onclick="location.href='https://localhost:5001/Category/ShowCategory/?category=AVM'">AVM</option>
+            <option onclick="location.href='https://localhost:5001/Category/ShowCategory/?category=CK'">CK</option>
+        </select>
+    </div>
     <div class="searchbtn">
         <form asp-area="" asp-action="Search" asp-controller="Search">
             <input asp-for="SearchInput" placeholder="Search all" type="text">
