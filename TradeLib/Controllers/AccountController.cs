@@ -173,8 +173,8 @@ namespace TradeLib.Controllers
             try
             {
                 client.Connect("smtp.gmail.com", 465, true);
-                // client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
-                client.Authenticate("annbossova@gmail.com","AlexBossov123412344321");
+                client.Authenticate("behappydtworry@gmail.com","$om&Vasily2_2");
+                // client.Authenticate("annbossova@gmail.com","AlexBossov123412344321");
             }
             catch (Exception e)
             {

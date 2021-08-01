@@ -13,9 +13,14 @@
         {
             <div display:inline-block>
                 <bold>Name: @person.Name</bold>
-                <i class="material-icons" onclick="location.href='/Account/EditProfile'">edit</i>
+                <a href="https://localhost:5001/Account/EditProfile">
+                    <span class="material-icons">edit</span>
+                </a>
             </div>
-            <span class="material-icons" onclick="location.href='/PersonProducts/PersonProducts'">inventory_2</span>
+            <span class="myprod">My products</span>
+            <a href="https://localhost:5001/PersonProducts/PersonProducts" style="position: relative;top:5px;">
+                <span class="material-icons">inventory_2</span>
+            </a>
         }
         else
         {
