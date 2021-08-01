@@ -5,30 +5,23 @@
 }
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<div>
+<link rel="stylesheet" href="css/my-flex-container.css">
+<div class="my-flex-container">
     <table>
-        @{ byte i = 0; }
         @foreach (var product in Model)
         {
-            Console.Write(product.Name);
             <td 
                 type="button"
                 onclick="location.href='https://localhost:5001/Product/ShowProduct/@product.Id'"
                 class="product">
                 @if (product.Image is not null)
                 {
-                    <img src="data:image;base64,@Convert.ToBase64String(product.Image)" alt="@product.Name" height="350" weight="350"/>
+                    <img src="data:image;base64,@Convert.ToBase64String(product.Image)" alt="@product.Name"  style="overflow: hidden; height: 150px; width: 150px"/>
                     <br/>
                 }
                 Name: @product.Name <br/>
                 Price: @product.Price <br/>
             </td>
-            i++;
-            if (i == 4)
-            {
-                i = 0;
-                <tr></tr>
-            }
         }
     </table>
 </div>
