@@ -8,6 +8,8 @@ namespace TradeLib.Models
         public DbSet<Person> Persons { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<CartPositions> CartPositions { get; set; }
+        
+        public DbSet<PersonProductsModel> PersonProductsModels { get; set; }
         public Context(DbContextOptions<Context> options)
             : base(options)
         {
