@@ -86,15 +86,19 @@ namespace TradeLib.Controllers
                 product.ImageName = uploadImage.FileName;
 
                 _db.Products.Add(product);
+
+                var personProductsModel = new PersonProductsModel {ProductId = product.Id, PersonId = person.Id};
+                _db.PersonProductsModels.Add(personProductsModel);
                 _db.SaveChanges();
 
-                return RedirectToAction("Index", "Catalog");
+                return View("ShowProduct", product);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"{e.Message}");
                 return View();
             }
+
         }
         
         
@@ -156,6 +160,12 @@ namespace TradeLib.Controllers
             foreach (var identifier in ides)
             {
                 _db.CartPositions.Remove(identifier);
+            }
+            
+            var idesProduct = _db.PersonProductsModels.Where(identifier => identifier.ProductId == product.Id).ToList();
+            foreach (var identifier in idesProduct)
+            {
+                _db.PersonProductsModels.Remove(identifier);
             }
             
             _db.SaveChanges();
