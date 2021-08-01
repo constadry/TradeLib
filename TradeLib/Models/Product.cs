@@ -1,7 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
 
 namespace TradeLib.Models
 {
@@ -23,7 +21,7 @@ namespace TradeLib.Models
         public string ImageName { get; set; }
         
         [Required]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
         
         public int VisitCount { get; set; }
     }

@@ -68,7 +68,8 @@ namespace TradeLib.Controllers
         [Authorize]
         public IActionResult CreateProduct() => View();
 
-        [Authorize] [HttpPost]
+        [Authorize]
+        [HttpPost]
         public IActionResult CreateProduct(Product product, IFormFile uploadImage)
         {
             var userEmail = User.Identity?.Name;
@@ -98,10 +99,8 @@ namespace TradeLib.Controllers
                 Console.WriteLine($"{e.Message}");
                 return View();
             }
-
         }
-        
-        
+
         [Authorize]
         public IActionResult EditProduct(Guid? id)
         {
