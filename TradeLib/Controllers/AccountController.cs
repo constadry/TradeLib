@@ -18,7 +18,6 @@ namespace TradeLib.Controllers
 
         public AccountController(Context context) => _db = context;
 
-        [HttpGet]
         public IActionResult Login() => View();
         
         [HttpPost][ValidateAntiForgeryToken]
@@ -27,18 +26,12 @@ namespace TradeLib.Controllers
             foreach (var account in _db.Persons)
             {
                 if (account.Email != loginModel.Email || account.Password != loginModel.Password) continue;
-                if (account.Confirmed) 
-                {
-                    await Authenticate(account.Email);
-
-                    return RedirectToAction("Person", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("ConfirmYourEmail", "Message");
-                }
+                if (!account.Confirmed) return RedirectToAction("ConfirmYourEmail", "Message");
+                
+                await Authenticate(account.Email);
+                return RedirectToAction("Person", "Home");
             }
-            return RedirectToAction("EnterExistData", "Message");;
+            return RedirectToAction("EnterExistData", "Message");
         }
 
         private bool IsUserExist(string address) => 
@@ -54,7 +47,6 @@ namespace TradeLib.Controllers
             {
                 if (!IsUserExist(person.Email))
                 {
-                    //Check confirm account 
                     _db.Add(new Person
                     {
                         Email = person.Email, Name = person.Name, Password = person.Password, Confirmed = false
@@ -69,11 +61,7 @@ namespace TradeLib.Controllers
                 SendMessage(person.Email, htmlBody);
                 return RedirectToAction("Person", "Home");
             }
-            else
-            {
-                ModelState.AddModelError("", "Password or Email are mot correct");
-            }
-
+            ModelState.AddModelError("", "Password or Email are mot correct");
             return View(person);
         }
 
@@ -94,7 +82,6 @@ namespace TradeLib.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
         public IActionResult Restore()
         {
             ViewBag.Email = Request.QueryString.Value?.Split('=').LastOrDefault();
@@ -104,18 +91,13 @@ namespace TradeLib.Controllers
         [HttpPost]
         public IActionResult Restore(RestoreModel restoreModel)
         {
-            foreach (var person in _db.Persons)
-            {
-                if (person.Email == restoreModel.Email)
-                {
-                    person.Password = restoreModel.Password;
-                }
-            }
+            foreach (var person in _db.Persons.Where(person => person.Email == restoreModel.Email))
+                person.Password = restoreModel.Password;
+            
             _db.SaveChanges();
             return RedirectToAction("Person", "Home");
         }
 
-        [HttpGet]
         public IActionResult EditProfile() => View();
 
         [HttpPost]
@@ -179,7 +161,6 @@ namespace TradeLib.Controllers
             catch (Exception e)
             {
                 Console.WriteLine($"{e.Message}");
-                throw;
             }
 
             client.Send(message);

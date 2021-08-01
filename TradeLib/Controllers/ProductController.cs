@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -11,23 +12,20 @@ namespace TradeLib.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
-
         private readonly Context _db;
 
-        public ProductController(ILogger<ProductController> logger, Context context)
+        public ProductController(Context context)
         {
-            _logger = logger;
             _db = context;
         }
 
         public IActionResult ShowProduct(Guid? id)
         {
-            if (id == null) return View();
+            if (id is null) return View();
+            
             var product = new Product();
-            foreach (var prod in _db.Products)
+            foreach (var prod in _db.Products.Where(prod => prod.Id == id))
             {
-                if (prod.Id != id) continue;
                 prod.VisitCount++;
                 product = prod;
             }
@@ -39,7 +37,14 @@ namespace TradeLib.Controllers
         [Authorize]
         public IActionResult AddToCart(Guid? id)
         {
-            if (id == null) return Content("Id - null??");
+            try
+            {
+                if (id is null) throw new Exception("Id is null");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             foreach (var person in _db.Persons)
             {
@@ -68,23 +73,26 @@ namespace TradeLib.Controllers
         [Authorize]
         public IActionResult CreateProduct() => View();
 
-        [Authorize] [HttpPost]
-        public IActionResult CreateProduct(Product product, IFormFile uploadImage)
+        [Authorize] 
+        [HttpPost]
+        public IActionResult CreateProduct(Product product, IFormFile? uploadImage)
         {
             var userEmail = User.Identity?.Name;
             var person = _db.Persons.ToList().FirstOrDefault(p => p.Confirmed && p.Email == userEmail);
             if (person == null) return RedirectToAction("ConfirmYourEmail", "Message");
             try
             {
-                using (var ms = new MemoryStream())
+                if (uploadImage is not null)
                 {
-                    uploadImage.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    product.Image = fileBytes;
+                    using (var ms = new MemoryStream())
+                    {
+                        uploadImage.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        product.Image = fileBytes;
+                    }
+                    product.ImageName = uploadImage.FileName;
                 }
-
-                product.ImageName = uploadImage.FileName;
-
+                 // TODO: default image
                 _db.Products.Add(product);
 
                 var personProductsModel = new PersonProductsModel {ProductId = product.Id, PersonId = person.Id};
@@ -101,13 +109,12 @@ namespace TradeLib.Controllers
 
         }
         
-        
         [Authorize]
         public IActionResult EditProduct(Guid? id)
         {
             try
             {
-                if (id is null) throw new Exception("Name is null");
+                if (id is null) throw new Exception("Id is null");
                 var product = _db.Products.FirstOrDefault(prod => prod.Id == id);
                 if(product is null) throw new Exception("DB hasn't this id");
                 
@@ -116,7 +123,7 @@ namespace TradeLib.Controllers
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return View();
+                return View("Error");
             }
         }
 
@@ -130,46 +137,44 @@ namespace TradeLib.Controllers
                 prod.Type = product.Type; 
                 prod.Description = product.Description; 
                 prod.Price = product.Price;
-                if (uploadImage is not null)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        uploadImage.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        prod.Image = fileBytes;
-                    }
-                }
+                
+                if (uploadImage is null) continue;
+                
+                using var ms = new MemoryStream();
+                uploadImage.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                prod.Image = fileBytes;
             }
 
             _db.SaveChanges();
             return RedirectToAction("ShowProduct", "Product", product);
         }
-
-
+        
         [Authorize]
         public IActionResult DeleteProduct(Guid? id)
         {
-            var product = _db.Products.FirstOrDefault(prod => prod.Id == id);
+            try
+            {
+                var product = _db.Products.FirstOrDefault(prod => prod.Id == id);
             
-            if (product is null)
-                throw new Exception("Impossible");
+                if (product is null)
+                    throw new Exception("DB hasn't this product");
             
-            _db.Products.Remove(product);
+                _db.Products.Remove(product);
+                foreach (var cartPosition in _db.CartPositions.Where(cartPosition => cartPosition.ProductId == product.Id))
+                    _db.CartPositions.Remove(cartPosition);
+                
+                foreach (var personProductsModel in _db.PersonProductsModels.Where(personProductsModel => personProductsModel.ProductId == product.Id))
+                    _db.PersonProductsModels.Remove(personProductsModel);
 
-            var ides = _db.CartPositions.Where(identifier => identifier.ProductId == product.Id).ToList();
-            foreach (var identifier in ides)
-            {
-                _db.CartPositions.Remove(identifier);
+                _db.SaveChanges();
+                return RedirectToAction("PersonProducts", "PersonProducts");
             }
-            
-            var idesProduct = _db.PersonProductsModels.Where(identifier => identifier.ProductId == product.Id).ToList();
-            foreach (var identifier in idesProduct)
+            catch (Exception e)
             {
-                _db.PersonProductsModels.Remove(identifier);
+                Console.WriteLine(e);
+                return View("Error");
             }
-            
-            _db.SaveChanges();
-            return RedirectToAction("Index", "Catalog");
         }
     }
 }
