@@ -46,9 +46,18 @@
 
         <b>Price</b>
         <div>
-            <input asp-for="Price" placeholder="Enter Price">
+            <input type="number" id="price" asp-for="Price" placeholder="Enter Price">
             <span asp-validation-for="Price"></span>
         </div>
+        <script>
+            const $input = document.querySelector("#price");
+            const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /[0-9\/]+/;
+            $input.addEventListener("keypress", e => {
+              if (!BIRTHNUMBER_ALLOWED_CHARS_REGEXP.test(e.key)) {
+                e.preventDefault();
+              }
+            });
+        </script>
         
         <input type="submit" placeholder="Edit" name="Edit" value="Edit" required>
     </form>

@@ -106,9 +106,8 @@ namespace TradeLib.Controllers
                 Console.WriteLine($"{e.Message}");
                 return View();
             }
-
         }
-        
+  
         [Authorize]
         public IActionResult EditProduct(Guid? id)
         {

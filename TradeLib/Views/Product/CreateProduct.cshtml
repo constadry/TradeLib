@@ -33,7 +33,16 @@
         <hr>
         
         <b>Price</b>
-        <input type="text" placeholder="Enter Price" name="Price" required>
+        <input type="number" placeholder="Enter Price" name="Price" id="price" required>
+        <script>
+            const $input = document.querySelector("#price");
+            const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /[0-9\/]+/;
+            $input.addEventListener("keypress", e => {
+              if (!BIRTHNUMBER_ALLOWED_CHARS_REGEXP.test(e.key)) {
+                e.preventDefault();
+              }
+            });
+        </script>
         <hr>
 
         <input type="submit"
