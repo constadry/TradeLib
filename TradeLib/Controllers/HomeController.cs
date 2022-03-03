@@ -10,11 +10,9 @@ namespace TradeLib.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly Context _db;
-        public HomeController(ILogger<HomeController> logger, Context context)
+        public HomeController(Context context)
         {
-            _logger = logger;
             _db = context;
         }
         

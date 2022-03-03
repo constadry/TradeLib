@@ -14,7 +14,6 @@ namespace TradeLib.Controllers
             _db = context;
         }
         
-        [HttpGet]
         public IActionResult ShowCategory()
         {
             var categoryName = Request.QueryString.Value?.Split('=').LastOrDefault();
